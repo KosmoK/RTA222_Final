@@ -38,8 +38,9 @@ function characterSelect(){
 } 
 function mainMenu(){
 	background('skyblue');
-	rect(252, 140, 190, 70);
-	text("Start");
+	rect(252, 140, 190, 70, 20);
+	text("Start", 250, 50);
+	
 	textAlign(CENTER);
 
 }
