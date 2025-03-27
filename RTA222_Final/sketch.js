@@ -16,3 +16,15 @@ function draw() {
 		ball.moveTo(mouse);
 	}
 }
+
+class note{
+	key;
+	time;
+	lyric;
+
+	constructor(key, time, lyric = null){
+		this.key = key;
+		this.time = time;
+		this.lyric = lyric;
+	}
+}
