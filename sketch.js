@@ -34,9 +34,11 @@ function characterSelect(){
 	background('skyblue');
 	circle[12,3,46,6];
 	Image() // i want to add my eye flower fork image in here for the character as well as the second drawing at discord
-}
+} 
 function mainMenu(){
 	background('skyblue');
+	text("Start");
+	textAlign(CENTER);
 }
 function songSelectionScreen(){
 	background('skyblue');
