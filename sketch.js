@@ -39,11 +39,13 @@ function characterSelect(){
 function mainMenu(){
 	background('skyblue');
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	fill("blue");
+=======
+	fill("");
+>>>>>>> 2b68938 (j)
 	rect(252, 140, 190, 70, 20);
-	
-
 	text("Start", 250, 50);
 	
 	
