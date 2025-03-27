@@ -38,6 +38,18 @@ function characterSelect(){
 }
 function mainMenu(){
 	background('skyblue');
+<<<<<<< HEAD
+=======
+	fill("blue");
+	rect(252, 140, 190, 70, 20);
+	
+
+	text("Start", 250, 50);
+	
+	
+	textAlign(CENTER);
+
+>>>>>>> 731e4ba (jjj)
 }
 function songSelectionScreen(){
 	background('skyblue');
