@@ -45,7 +45,7 @@ function songPlay(){
 	background('skyblue');
 }
 
-// CLASSES - HOGAN ONLY ZONE :> (Unless you know what is happening)
+// CLASSES - HOGAN ONLY ZONE (Unless you know what is happening)
 class note{
 	key;
 	time;
