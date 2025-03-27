@@ -24,6 +24,7 @@ function draw() {
 		ball.speed = 10;
 		ball.moveTo(mouse);
 	}
+	mainMenu();
 }
 
 // GAMESTATES
@@ -39,6 +40,7 @@ function mainMenu(){
 	background('skyblue');
 	text("Start");
 	textAlign(CENTER);
+
 }
 function songSelectionScreen(){
 	background('skyblue');
