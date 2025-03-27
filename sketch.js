@@ -8,6 +8,7 @@ function preload() {
 function setup() {
 	new Canvas(500, 500);
 	displayMode(CENTERED);
+	rectMode(CENTER)
 
 	ball = new Sprite();
 	ball.diameter = 50;
@@ -37,6 +38,9 @@ function characterSelect(){
 function mainMenu(){
 	background('skyblue');
 }
+function songSelectionScreen(){
+	background('skyblue');
+}
 function songPlay(){
 	background('skyblue');
 }
@@ -45,6 +49,7 @@ function songPlay(){
 class note{
 	key;
 	time;
+	progress = 0;
 	lyric;
 
 	constructor(key, time, lyric = null){
@@ -58,15 +63,25 @@ class note{
 	get lyric(){return this.lyric;};
 }
 class song{
+	static allAudio;
+
 	audio;
+	length;
 	notes;
 	speedMulti = 1;
 
 	playTime; // Timer goes from 0ms to end-of-song-ms
 
-	constructor(audio, notes = []){
+	constructor(audio, bpm, length, notes = []){
+		if(allAudio == null){
+			allAudio = [audio];
+		}; // Not even sure if this works
 		this.audio = audio;
+		append(allAudio, audio);
+
+		this.length = length;
 		this.notes = notes;
+		this.bpm = bpm;
 		this.playTime = 0;
 	}
 
@@ -85,4 +100,5 @@ class song{
 	}
 
 	get playTime(){return this.playTime;};
+	get audio(){return this.audio;};
 }
