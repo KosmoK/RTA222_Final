@@ -2,7 +2,7 @@ let ball;
 let gamestate = 'mainMenu';
 
 function preload() {
-	
+	beeSong = "assets/audio/bee.mp3"
 }
 
 function setup() {
@@ -69,7 +69,7 @@ class song{
 	audio;
 	length;
 	notes;
-	speedMulti = 1;
+	speedMulti;
 
 	playTime; // Timer goes from 0ms to end-of-song-ms
 
@@ -77,13 +77,14 @@ class song{
 		if(allAudio == null){
 			allAudio = [audio];
 		}; // Not even sure if this works
-		this.audio = audio;
+		this.audio = loadSound(audio);
 		append(allAudio, audio);
 
 		this.length = length;
 		this.notes = notes;
 		this.bpm = bpm;
 		this.playTime = 0;
+		this.speedMulti = 1;
 	}
 
 	/** METHOD FOR PLAYING THE SONG
@@ -102,4 +103,5 @@ class song{
 
 	get playTime(){return this.playTime;};
 	get audio(){return this.audio;};
+	get notes(){return this.notes;};
 }
