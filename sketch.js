@@ -38,6 +38,7 @@ function characterSelect(){
 } 
 function mainMenu(){
 	background('skyblue');
+	rect(252, 140, 190, 70);
 	text("Start");
 	textAlign(CENTER);
 
