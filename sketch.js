@@ -128,7 +128,7 @@ class Song{
 	}
 	/** METHOD FOR DISPLAYING THE NOTES
 	 * 	Updates the screen w/ notes
-	 *  Uses p5 play's tiles system for reading notes
+	 *  Uses p5 play's tiles system for reading notes? na.
 	 *  https://p5play.org/learn/tiles.html
 	 * 
 	 *  Notes work like this:
