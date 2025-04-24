@@ -21,12 +21,12 @@ let song3;
 let gameState = 0;
 
 function preload() {
-	// LOADSONGS
-	beeN1 = [1,0,0,0,1];
-	beeN2 = [0,1,0,0,0];
-	beeN3 = [0,0,1,0,1];
-	beeN4 = [1,0,0,1,0];
-	bee = new Song("assets/audio/bee.mp3",120,65, beeN1, beeN2, beeN3, beeN4,8);
+	// LOADSONGS                                                                                                                                                                                                                                    v Song starts here               v Second badadadadada
+	beeN1 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0];
+	beeN2 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0];
+	beeN3 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0];
+	beeN4 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0];
+	bee = new Song("assets/audio/bee.mp3",120,65, beeN1, beeN2, beeN3, beeN4,16);
 
 	dsN1 = [];
 	dsN2 = [];
@@ -258,6 +258,15 @@ function draw() {
 
 		if(gameState == 2){
 			bee.progressSong();
+
+			fill("black");
+		    textFont("Arial");
+			text("SCORE: " + bee.getScore(), width/2, height/2)
+
+			if(!(bee.isSongPlaying())){
+				gameState = 1;
+				songSelect();
+			}
 		}
 		if(gameState == 3){
 
@@ -330,7 +339,7 @@ function draw() {
 
 // GAMESTATES
 function bg(){
-	background('rgb(246,221,255)');
+  background('rgb(246,221,255)');
   fill('rgb(155,155,188)');
   stroke('rgb(230,208,174)');
   //big circles
@@ -406,6 +415,7 @@ class Song{
 	#progress;
 	#lastUpdate;
 	#playing;
+	#score;
 
 	constructor(audio, bpm, length, notes1, notes2, notes3, notes4, notesPerBeat = 4, speedMulti = 1){
 		this.#audio = loadSound(audio);
@@ -417,6 +427,7 @@ class Song{
 		this.#playing = false;
 		this.#progress = 0;
 		this.#lastUpdate = millis();
+		this.#score = 0;
 	}
 	/** METHOD FOR DISPLAYING THE NOTES
 	 * 	Updates the screen w/ notes
@@ -435,6 +446,9 @@ class Song{
 
 		for(let i = 0; i < this.#notes.length; i++){ // Key = index
 			for(let j = 0; j < this.#notes[i].length; j++){ // position in NPS = index
+				rectMode(CORNER);
+				fill("black")
+				stroke("white")
 				this.drawnote(this.#notes[i][j],i,j-this.#progress);
 			}
 		}
@@ -443,10 +457,6 @@ class Song{
 	// Different from displayNote, private. Dont use it outside of this class
 	// Simply draws a square relating to the length of the note
 	drawnote(length,xpos,nps){
-		rectMode(CORNER);
-		fill("black")
-		stroke("white")
-
 		if(length != 0){
 			rect(
 				width-((width/4)) - (width/8)*xpos - width/8/2, 
@@ -461,6 +471,7 @@ class Song{
 	 * 	If speed multi is not specified, plays at last speed multi
 	 */
 	playSong(speedMulti = this.#speedMulti) {
+		this.#score = 0;
 		this.#speedMulti = speedMulti;
 		this.#audio.play()
 		this.#progress = 0;
@@ -481,18 +492,32 @@ class Song{
 			this.displayNotes();
 
 			// D = 68, F = 70, J = 74, K = 75
-			let keyboardKeys = [68,70,74,75];
+			let keyboardKeys = [75,74,70,68];
 
 			let isConditionBrokenOnce = false; // this is set to true if ONE of the keys is wrong
+
+			
 
 			for(let i = 0; i < this.#notes.length; i++){
 				let tileValue = this.#notes[i][this.#progress]
 				let keyToPress = keyboardKeys[i]
 
+				if (keyIsDown(keyToPress)){
+					fill("white");
+					rectMode(CORNER);
+					stroke("white")
+					this.drawnote(1,i,0);
+				}
+				else{
+					noFill()
+					rectMode(CORNER);
+					stroke("white")
+					this.drawnote(1,i,0);
+				}
+
 				if(tileValue == 0 && keyIsDown(keyToPress)){
 					isConditionBrokenOnce = true;
 					print("NOPE")
-					break;
 				}
 			}
 
@@ -500,16 +525,18 @@ class Song{
 				let tileValue = this.#notes[i][this.#progress]
 				let keyToPress = keyboardKeys[i]
 
-				if(!(tileValue != 0 && keyIsDown(keyToPress))){
-					print("nope!")
-				}
-				else{
-					score++;
-					print("SCORE: " + score + " | " + "TILEVALUE: "+tileValue + " | " + "CURRENTPROGRESS:" + this.#progress)
+				if(tileValue != 0 && keyIsDown(keyToPress)){
+					this.#score++;
+					print("SCORE: " + this.#score + " | " + "TILEVALUE: "+tileValue + " | " + "CURRENTPROGRESS:" + this.#progress)
+					
+					noFill();
+					rectMode(CORNER);
+					stroke("white")
+					this.drawnote(1,i,0);
 				}
 			}
 
-			if(this.#progress > this.#notes[0].length){
+			if(this.#progress >= this.#notes[0].length){
 				print("Nope!")
 				this.stopSong();
 			}
@@ -519,7 +546,10 @@ class Song{
 	 * 	Stops the audio, scroll, etc...
 	 */
 	stopSong() {
-		TODO // UNIMPLEMENTED
+		this.#audio.stop();
+		gameState = 1
+		print("Song ended")
+		this.#playing = false
 	}
 
 	getPlayTime(){return this.#progress;};
@@ -527,4 +557,5 @@ class Song{
 	getNotes(){return this.#notes;};
 	getNotesPerSecond(){return this.#nps;};
 	isSongPlaying(){return this.#playing;};
+	getScore(){return this.#score;};
 }
