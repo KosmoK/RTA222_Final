@@ -7,104 +7,396 @@ let bee;
 let duckSong;
 let hmcQueen;
 
+let score = 0;
+
+let play;
+let settings;
+let credButton;
+let exitButton;
+let backButton;
+let saveButton;
+let song1;
+let song2;
+let song3;
+let gameState = 0;
+
 function preload() {
 	// LOADSONGS
 	beeN1 = [1,0,0,0,1];
 	beeN2 = [0,1,0,0,0];
-	beeN3 = [0,0,2,0,1];
-	beeN4 = [0,0,0,1,0];
+	beeN3 = [0,0,1,0,1];
+	beeN4 = [1,0,0,1,0];
 	bee = new Song("assets/audio/bee.mp3",120,65, beeN1, beeN2, beeN3, beeN4);
 
-	duckSong = new Song("assets/audio/The Duck Song.mp3",186,120)
-	hmcQueen = new Song("assets/audio/hacha mecha carnival (rin&len).mp3",120,147)
-}
+	dsN1 = [];
+	dsN2 = [];
+	dsN3 = [];
+	dsN4 = [];
+	duckSong = new Song("assets/audio/The Duck Song.mp3",186,120, dsN1,dsN2,dsN3,dsN4);
 
-function setup() {
-	new Canvas(500, 500);
-	displayMode(CENTER);
-	rectMode(CENTER)
-	colorMode(HSB);
+	hmcN1 = [];
+	hmcN2 = [];
+	hmcN3 = [];
+	hmcN4 = [];
+	hmcQueen = new Song("assets/audio/hacha mecha carnival (rin&len).mp3",120,147, hmcN1,hmcN2,hmcN3,hmcN4);
 }
+	////////////////////////////////////////////////
+function setup() {
+	createCanvas(800, 800);
+	colorMode(HSB);
+	
+	play = new Sprite(); // play button
+	play.x = 290;
+	play.y = 200;
+	play.width = 450;
+	play.color = "#e4c1f9";
+	play.stroke = "#e4c1f9";
+	play.text = "Play";
+	play.textSize = 20;
+	
+	settings = new Sprite(); // settings button
+	settings.x = 292;
+	settings.y = 265;
+	settings.width = 450;
+	settings.color = "#d0f4de";
+	settings.stroke = "#d0f4de";
+	settings.text = "Settings";
+	settings.textSize = 20;
+	
+	credButton = new Sprite(); // credits button
+		credButton.x = 418;
+		credButton.y = 330;
+		credButton.width = 200;
+		credButton.color = "white";
+		credButton.stroke = "white";
+		credButton.text = "Credits";
+		credButton.textSize = 18;
+	
+	exitButton = new Sprite() // exit button
+	exitButton.x = 182;
+	exitButton.y = 330;
+	exitButton.width = 230;
+	exitButton.color = "rgb(239, 107, 107)";
+	exitButton.stroke = "rgb(239, 107, 107)";
+	exitButton.text = "Exit Game";
+	exitButton.textSize = 18;
+	
+	backButton = createButton('Back');
+		backButton.position(15, 15);
+		backButton.size(100);
+	
+	 key1Box = createInput('a');
+		key1Box.attribute('maxlength', 1);
+		key1Box.position(250, 123);
+		key1Box.size(80);
+		
+		key2Box = createInput('s');
+		key2Box.attribute('maxlength', 1);
+		key2Box.position(250, 165);
+		key2Box.size(80);
+		
+		key3Box = createInput('k');
+		key3Box.attribute('maxlength', 1);
+		key3Box.position(250, 205);
+		key3Box.size(80);
+		
+		key4Box = createInput('l');
+		key4Box.attribute('maxlength', 1);
+		key4Box.position(250, 245);
+		key4Box.size(80);
+  
+	song1 = new Sprite()
+	  song1.x = width/2;
+	  song1.y = 120;
+	  song1.width = 400;
+	  song1.color = "white";
+	  song1.stroke = "white";
+	  song1.text = "bee";
+	  song1.textSize = 20;
+	  
+	  song2 = new Sprite()
+	  song2.x = 300;
+	  song2.y = 210;
+	  song2.width = 400;
+	  song2.color = "white";
+	  song2.stroke = "white";
+	  song2.text = "HACHA MECHA Carnival (feat.Rin & Len)";
+	  song2.textSize = 15;
+	  
+	  song3 = new Sprite()
+	  song3.x = 300;
+	  song3.y = 300;
+	  song3.width = 400;
+	  song3.color = "white";
+	  song3.stroke = "white";
+	  song3.text = "The Duck Song";
+	  song3.textSize = 20;
+  }
 
 function draw() {
 	secondsSinceStart = millis() / 1000;
-	if(gamestate == 'mainMenu'){
-		mainMenu();
-
-		if(bee.isSongPlaying()){
-			bee.displayNotes();
+	if(gameState == 0) {
+		bg();
+		rectMode(CENTER);
+		textAlign(CENTER);
+		
+		fill('white');
+		textFont("Verdana");
+		textSize(60);
+		text("RHYTHM GAME", 295, 125); // title
+		
+		key1Box.hide();
+		key2Box.hide();
+		key3Box.hide();
+		key4Box.hide();
+		backButton.hide();
+		  song1.remove();
+		  song2.remove();
+		  song3.remove();
 		}
-	}
-	else if(gamestate == 'settings'){
-		settings();
-	}
-	else if (gamestate == 'characterSelect'){
-		characterSelect();
-	}
+		
+		function songs() {
+		  song1 = new Sprite()
+		  song1.x = width/2;
+		  song1.y = 120;
+		  song1.width = 400;
+		  song1.color = "white";
+		  song1.stroke = "white";
+		  song1.text = "bee";
+		  song1.textSize = 20;
+		  
+		  song2 = new Sprite()
+		  song2.x = 300;
+		  song2.y = 210;
+		  song2.width = 400;
+		  song2.color = "white";
+		  song2.stroke = "white";
+		  song2.text = "HACHA MECHA Carnival (feat.Rin & Len)";
+		  song2.textSize = 15;
+		  
+		  song3 = new Sprite()
+		  song3.x = 300;
+		  song3.y = 300;
+		  song3.width = 400;
+		  song3.color = "white";
+		  song3.stroke = "white";
+		  song3.text = "The Duck Song";
+		  song3.textSize = 20;
+		}
+		
+		function songSelect() {
+		  background("rgb(246,221,255)");
+		  play.remove();
+		  settings.remove();
+		  exitButton.remove();
+		  credButton.remove();
+		  
+		  textSize(30);
+		  fill("rgb(155,155,188)")
+		  stroke("rgb(155,155,188)");
+		  textAlign(CENTER);
+		  text("Please select a song: ", width/2, 50);
+		  
+		  songs();
+		}
+		
+		if(play.mouse.pressed()) { // play game
+		  gameState = 1;
+		  songSelect();
+		  backButton = createButton('Back');
+			backButton.position(255, 345);
+			backButton.size(100);
+			backButton.mousePressed(mainMenu2);
+		}
+		
+		if(song1.mouse.pressed()) {
+		  gameState = 2;
+		  background("rgb(246,221,255)");
+		  song1.remove();
+		  song2.remove();
+		  song3.remove();
+		  backButton.hide();
+		  
+		  if(mouse.pressed() == true) {
+			bee.playSong();
+		  }
+		}
+		
+		if(song2.mouse.pressed()) {
+		  gameState = 3;
+		  background("rgb(246,221,255)");
+		  song1.remove();
+		  song2.remove();
+		  song3.remove();
+		  backButton.hide();
+		  
+		  if(mouse.pressed() == true) {
+			hmcQueen.playSong();
+		  }
+		}
+		
+		if(song3.mouse.pressed()) {
+		  gameState = 4;
+		  background("rgb(246,221,255)");
+		  song1.remove();
+		  song2.remove();
+		  song3.remove();
+		  backButton.hide();
+		  
+		  textAlign(CENTER);    
+		  textSize(30);
+		  fill("black");
+		  text("Ready?", width/2, height/2);
+		  
+		  textSize(15);
+		  text("Press anything to start", width/2, 220);
+		  
+		  if(mouse.pressed() == true) {
+			duckSong.playSong();
+		  }
+		}
 
-	if (mouse.presses()) {
-		bee.playSong();
+		if(gameState == 2){
+			bee.progressSong();
+		}
+		if(gameState == 3){
 
-		text(bee.getNotesPerSecond(),width/2 + 100,height/2);
-	}
+		}
+		if(gameState == 4){
+
+		}
+		
+	   ////////////////////////////////////////////////
+		  if(settings.mouse.pressed()) { // to change game controls
+			gameState = 1;
+			background("#b9b5ff");
+			
+			settings.remove();
+			play.remove();
+			exitButton.remove();
+			credButton.remove();
+			goBackSettings();
+			
+			key1Box.show();
+			key2Box.show();
+			key3Box.show();
+			key4Box.show();
+			
+			textFont();
+			textSize(20);
+			text("**Keyboard Controls**", width/2, 100);
+			fill("white");
+			text("Key 1:", 200, 140);
+			text("Key 2:", 200, 180);
+			text("Key 3:", 200, 220);
+			text("Key 4:", 200, 260);
+		  }
+		
+		////////////////////////////////////////////////
+		if(exitButton.mouse.pressed()) { // exit game
+		  gameState = 1;
+		  background(0);
+		  settings.remove();
+			play.remove();
+			exitButton.remove();
+			credButton.remove();
+		  
+		  fill("white");
+		  textFont("Arial");
+		  textSize(30);
+		  text("See you Soon! ^^", width/2, 200);
+		}
+		
+		////////////////////////////////////////////////
+		if(credButton.mouse.pressed()) { // credits
+		  gameState = 1;
+		  background("#b9b5ff");
+		  settings.remove();
+			play.remove();
+			exitButton.remove();
+			credButton.remove();
+		  goBack();
+		  
+		  fill("black");
+		  textFont("Arial");
+		  textSize(20);
+		  text('Game by: Hogan Kwak, Queen Zerit & Harini Haridan', width/2, 120);
+		  text('Songs in-game:', width/2, 160);
+		  text("'Bee' (by GroovyDomino52 on Youtube)", width/2, 190);
+		  text("'HACHA MECHA Carnival (feat.Rin & Len)' (by Tonbi on Youtube)", width/2, 220);
+		  text("'The Duck Song' (by forrestfire101 on Youtube)", width/2, 250);
+		}
 }
 
 // GAMESTATES
-function settings(){
-	background('skyblue');
+function bg(){
+	background('rgb(246,221,255)');
+  fill('rgb(155,155,188)');
+  stroke('rgb(230,208,174)');
+  //big circles
+  circle(390, 390, 100);
+  circle(50, 50, 100);
+  circle(750, 750, 100);
+  circle(50, 750, 100);
+  circle(750, 50, 100);
+  fill('rgb(160,139,182)');
+  stroke('rgb(163,101,101)');
+  //small circles
+  circle(390, 200, 50);
+  circle(390, 600, 50);
+  circle(50, 390, 50);
+  circle(750, 390, 50);
 }
-function characterSelect(){
-	background('skyblue');
-	circle(12,3,46,6);
-	image() // i want to add my eye flower fork image in here for the character as well as the second drawing at discord
-}
-function songChoose(){
-	background('skyblue');
-}
-function mainMenu(){
-	background('skyblue');
-	
-	textAlign(CORNER);
-	textSize(60);
-	text("RHYTHM GAME", width/2, 120);
-	
-	stroke("white");
-	rect(247, 180, 90, 30, 10); // button 1
-	rect(245, 215, 90, 30, 10); // button 2
-	rect(245, 250, 90, 30, 10); // button 3
-	
-	textAlign(CENTER);
-	textSize(15);
-	text("PLAY", 290, 200);
-	text("SETTINGS", 290, 234);
-	text("EXIT", 290, 269);
-}
+function mainMenu() {
+	gameState = 0;
+	background("#b9b5ff");
+	backButton.hide();
+	key1Box.hide();
+	key2Box.hide();
+	key3Box.hide();
+	key4Box.hide();
+song1.remove();
+song2.remove();
+song3.remove();
 
-function textTwirl(pos, direction, duration = 1){
-	
+let firstKey = key1Box.value();
+let secKey = key2Box.value();
+let thirdKey = key3Box.value();
+let fourthKey = key4Box.value();
+console.log("Key 1: ", firstKey);
+console.log("Key 2: ", secKey);
+console.log("Key 3: ", thirdKey);
+console.log("Key 4: ", fourthKey);
+
+setup();
+}
+function mainMenu2() {
+	gameState = 0;
+	background("#b9b5ff");
+	backButton.hide();
+	key1Box.hide();
+	key2Box.hide();
+	key3Box.hide();
+	key4Box.hide();
+song1.remove();
+song2.remove();
+song3.remove();
+setup();
+}
+function goBackSettings() {
+    backButton = createButton('Back');
+      backButton.position(15, 15);
+      backButton.size(100);
+      backButton.mousePressed(mainMenu);
+}
+function goBack() {
+	backButton = createButton('Back');
+		backButton.position(15, 15);
+		backButton.size(100);
+		backButton.mousePressed(mainMenu2);
 }
 
 // // CLASSES - HOGAN ONLY ZONE (Unless you know what is happening)
-// class note{
-// 	#key;
-// 	#time;
-// 	#duration;
-// 	#lyric;
-
-// 	constructor(key, time, duration = 0, lyric = null){
-// 		this.#key = key;
-// 		this.#time = time;
-// 		this.#lyric = lyric;
-// 		this.#duration = duration;
-// 		// 0 = tap, anything greater then 0 = hold for that long in seconds
-// 	}
-
-// 	// Getters
-// 	getKey(){return this.#key;};
-// 	getTime(){return this.#time;};
-// 	getLyric(){return this.#lyric;};
-// 	getDuration(){return this.#duration;}; 
-// }
 class Song{
 	#audio;
 	#length; // ITS IN SECONDS
@@ -112,7 +404,7 @@ class Song{
 	#speedMulti;
 	#nps;
 	#progress;
-	#startTime;
+	#lastUpdate;
 	#playing;
 
 	constructor(audio, bpm, length, notes1, notes2, notes3, notes4, notesPerBeat = 4, speedMulti = 1){
@@ -124,7 +416,7 @@ class Song{
 
 		this.#playing = false;
 		this.#progress = 0;
-		this.#startTime = millis();
+		this.#lastUpdate = millis();
 	}
 	/** METHOD FOR DISPLAYING THE NOTES
 	 * 	Updates the screen w/ notes
@@ -139,10 +431,11 @@ class Song{
 	 */
 	displayNotes() {
 		// progressInMilis = this.#progress*this.#nps*1000;
+		bg();
 
 		for(let i = 0; i < this.#notes.length; i++){ // Key = index
 			for(let j = 0; j < this.#notes[i].length; j++){ // position in NPS = index
-				this.drawnote(this.#notes[i][j],i,j+this.#progress);
+				this.drawnote(this.#notes[i][j],i,j-this.#progress);
 			}
 		}
 	}
@@ -172,10 +465,55 @@ class Song{
 		this.#audio.play()
 		this.#progress = 0;
 
-		this.#startTime = millis();
+		this.#lastUpdate = millis();
 		this.#playing = true;
-
 		this.displayNotes();
+	}
+
+	progressSong(amount = 1){
+		// convert NPS to milliseconds
+
+		let millisecondVersion = this.#nps * 1000
+
+		if((millis() - this.#lastUpdate) >= millisecondVersion){
+			this.#lastUpdate = millis();
+			this.#progress++;
+			this.displayNotes();
+
+			// D = 68, F = 70, J = 74, K = 75
+			let keyboardKeys = [68,70,74,75];
+
+			let isConditionBrokenOnce = false; // this is set to true if ONE of the keys is wrong
+
+			for(let i = 0; i < this.#notes.length; i++){
+				let tileValue = this.#notes[i][this.#progress]
+				let keyToPress = keyboardKeys[i]
+
+				if(tileValue == 0 && keyIsDown(keyToPress)){
+					isConditionBrokenOnce = true;
+					print("NOPE")
+					break;
+				}
+			}
+
+			for(let i = 0; (i < this.#notes.length) && !(isConditionBrokenOnce); i++){
+				let tileValue = this.#notes[i][this.#progress]
+				let keyToPress = keyboardKeys[i]
+
+				if(!(tileValue != 0 && keyIsDown(keyToPress))){
+					print("nope!")
+				}
+				else{
+					score++;
+					print("SCORE: " + score + " | " + "TILEVALUE: "+tileValue + " | " + "CURRENTPROGRESS:" + this.#progress)
+				}
+			}
+
+			if(this.#progress > this.#notes[0].length){
+				print("Nope!")
+				this.stopSong();
+			}
+		}
 	}
 	/** METHOD FOR STOPPING THE SONG
 	 * 	Stops the audio, scroll, etc...
