@@ -26,7 +26,7 @@ function preload() {
 	beeN2 = [0,1,0,0,0];
 	beeN3 = [0,0,1,0,1];
 	beeN4 = [1,0,0,1,0];
-	bee = new Song("assets/audio/bee.mp3",120,65, beeN1, beeN2, beeN3, beeN4);
+	bee = new Song("assets/audio/bee.mp3",120,65, beeN1, beeN2, beeN3, beeN4,8);
 
 	dsN1 = [];
 	dsN2 = [];
